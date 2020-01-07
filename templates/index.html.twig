@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {{ dump(items) }}
+    <h1>Items</h1>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.name }} - {{ item.qty }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
