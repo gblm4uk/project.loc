@@ -96,17 +96,8 @@ class AdminController extends AbstractController
         $form = $this->createForm(ApiFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $task = $form->getData();
             dd($task);
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
-
-            //return $this->redirectToRoute('task_success');
         }
         return $this->render('form.html.twig', [
             'form' => $form->createView(),
