@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Items;
 use App\Form\ApiFormType;
 use App\Service\Helper;
+use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,12 +97,22 @@ class AdminController extends AbstractController
     {
         $form = $this->createForm(ApiFormType::class);
         $form->handleRequest($request);
+        $items = null;
         if ($form->isSubmitted()) {
-            $task = $form->getData();
-            dd($task);
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => 'http://project.loc',
+                // You can set any number of default request options.
+                'timeout'  => 2.0,
+            ]);
+            $response = $client->request('POST', '/items');
+            $body = $response->getBody();
+            $json = $body->getContents();
+            $items = json_decode($json, true);
         }
         return $this->render('form.html.twig', [
             'form' => $form->createView(),
+            'items' => $items,
         ]);
     }
 
@@ -119,5 +131,28 @@ class AdminController extends AbstractController
         return $this->render('qwe.html.twig', [
             'data' => $data,
         ]);
+    }
+
+    /**
+     * @Route("/items", name="items", methods={"POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function items(Request $request): Response
+    {
+        $itemsRepo = $this->getDoctrine()->getRepository(Items::class);
+        $items = $itemsRepo->findAll();
+        $itemsArr = [];
+        foreach ($items as $obj) {
+            $item["name"] = $obj->getName();
+            $item["qty"] = $obj->getQty();
+            array_push($itemsArr, $item);
+        }
+        $response = new JsonResponse($itemsArr);
+        return $response;
+
+
     }
 }

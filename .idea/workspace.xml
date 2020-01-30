@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b16353d-afcb-49ef-9e71-99d809f94e08" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +97,11 @@
       <path value="$PROJECT_DIR$/vendor/symfony/intl" />
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
     </include_path>
   </component>
   <component name="ProjectId" id="1W1E5aiIdt29920TJcWBOWoXmJn" />
@@ -107,12 +118,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\project.loc\config\packages" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\project.loc\templates" />
       <recent name="C:\xampp\htdocs\project.loc\src\Service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\project.loc\config\packages" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -138,7 +149,12 @@
       <option name="presentableId" value="Default" />
       <updated>1578308518742</updated>
       <workItem from="1578308523030" duration="7635000" />
-      <workItem from="1578316555519" duration="24432000" />
+      <workItem from="1578316555519" duration="28372000" />
+      <workItem from="1579630125240" duration="9909000" />
+      <workItem from="1579981150667" duration="1801000" />
+      <workItem from="1580144044301" duration="14199000" />
+      <workItem from="1580215258738" duration="12946000" />
+      <workItem from="1580321353826" duration="14400000" />
     </task>
     <servers />
   </component>
@@ -155,10 +171,15 @@
     </state>
     <state x="481" y="179" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1578309734251" />
     <state x="676" y="256" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578400976661" />
-    <state x="384" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1578308575423">
+    <state x="527" y="76" key="RollbackChangesDialog" timestamp="1580160715902">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="384" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1578308575423" />
+    <state x="527" y="76" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1580160715902" />
+    <state x="384" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1580321354823">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="384" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.-311.1920.1040@0.0.1366.728" timestamp="1580215308957" />
+    <state x="384" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1580321354823" />
     <state x="476" y="231" key="run.anything.popup" timestamp="1578403551267">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

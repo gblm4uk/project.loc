@@ -1,4 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {{ form(form) }}
+    <h1>Items</h1>
+    <ul>
+        {% if items is defined and items is not null  %}
+            {% for item in items %}
+                <li>{{ item.name }} - {{ item.qty }}</li>
+            {% endfor %}
+        {% else %}
+            No items upload.
+        {% endif %}
+    </ul>
 {% endblock %}
