@@ -11,10 +11,16 @@ class Items
 {
 
     public const FIELD_ITEM = 'item';
+    public const FIELD_NAME = 'name';
     public const FIELD_QTY = 'qty';
 
     public const FIELDS = [
         self::FIELD_ITEM,
+        self::FIELD_QTY,
+    ];
+
+    public const SORT_FIELDS = [
+        self::FIELD_NAME,
         self::FIELD_QTY,
     ];
 

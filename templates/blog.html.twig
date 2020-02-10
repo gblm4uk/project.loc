@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if app.user %}
+        user is logged in
+        <a href="/logout">Logout</a>
+    {% else %}
+        user is not logged in
+        <a href="/login">Login</a>
+        <a href="/register">Registration</a>
+    {% endif %}
+    <h1>Blog</h1>
+    {% if app.user %}
+        {{ form(form) }}
+    {% endif %}
+    <ul>
+        {% for post in posts %}
+        <li>{{ post.title }} - {{ post.content }} (autor: {{ post.author.email }})
+            {% if app.user is not null and app.user.email == post.author.email %}
+                <a href="/edit-post/{{ post.id }}">Edit</a>
+                <a href="/delete-post/{{ post.id }}">Delete</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

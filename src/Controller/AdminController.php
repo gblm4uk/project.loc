@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Entity\Post;
 use App\Form\ApiFormType;
+use App\Form\EditPostType;
 use App\Service\Helper;
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +16,81 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    /**
+     * @Route("/", name="blog")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function blog(Request $request): Response
+    {
+        $post = new Post();
+        $form = $this->createForm(EditPostType::class, $post);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $post = $form->getData();
+            $post->setAuthor($this->getUser());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
+        }
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findAll();
+        return $this->render('blog.html.twig', [
+            'posts' => $posts,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/edit-post/{id}", name="edit-post")
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function editPost(Request $request, int $id): Response
+    {
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        if ( !$post || $this->getUser()->getEmail() !== $post->getAuthor()->getEmail()) {
+            return $this->redirectToRoute('blog');
+        }
+        $form = $this->createForm(EditPostType::class, $post);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $post = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
+        }
+
+        return $this->render('edit_post.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/delete-post/{id}", name="delete-post")
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function deletePost(Request $request, int $id): Response
+    {
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        if ( !$post || $this->getUser()->getEmail() !== $post->getAuthor()->getEmail()) {
+            return $this->redirectToRoute('blog');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('blog');
+    }
+
     /**
      * @Route("/test", name="test", methods={"POST"})
      *
@@ -70,7 +147,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/", name="index")
+     * @Route("/items-list", name="items-list")
      *
      * @param Request $request
      *
@@ -99,16 +176,16 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         $items = null;
         if ($form->isSubmitted()) {
+            $sortType = $form->getData();
             $client = new Client([
-                // Base URI is used with relative requests
                 'base_uri' => 'http://project.loc',
-                // You can set any number of default request options.
-                'timeout'  => 2.0,
+                'timeout'  => 5.0,
             ]);
-            $response = $client->request('POST', '/items');
-            $body = $response->getBody();
-            $json = $body->getContents();
-            $items = json_decode($json, true);
+            $response = $client->request('POST', '/items' ,  [
+                'json' => $sortType['sort']
+            ]);
+            $items = json_decode($response->getBody()->getContents(), true);
+
         }
         return $this->render('form.html.twig', [
             'form' => $form->createView(),
@@ -125,8 +202,10 @@ class AdminController extends AbstractController
      */
     public function qwe(Request $request): Response
     {
-        $helper = new Helper();
-        $data = $helper->getFourLetters();
+        //$helper = new Helper();
+        //$data = $helper->getFourLetters();
+        $data = $request->getContent();
+        dd($data);
 
         return $this->render('qwe.html.twig', [
             'data' => $data,
@@ -142,8 +221,10 @@ class AdminController extends AbstractController
      */
     public function items(Request $request): Response
     {
+        $sortType = json_decode($request->getContent());
+        $sortTypeArr = explode('_', $sortType);
         $itemsRepo = $this->getDoctrine()->getRepository(Items::class);
-        $items = $itemsRepo->findAll();
+        $items = $itemsRepo->findSorted($sortTypeArr);
         $itemsArr = [];
         foreach ($items as $obj) {
             $item["name"] = $obj->getName();
@@ -152,7 +233,5 @@ class AdminController extends AbstractController
         }
         $response = new JsonResponse($itemsArr);
         return $response;
-
-
     }
 }
